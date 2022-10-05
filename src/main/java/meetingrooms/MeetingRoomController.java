@@ -50,7 +50,7 @@ public class MeetingRoomController {
         // Tárgyalók adatai: Név? Szélesség? Hosszúság (méter)?
         //for (int parameters : rooms) {
         for(int i = 0; i< rooms; i++) {
-            System.out.println("Tárgyaló neve?");
+            System.out.println((i+1) + " . tárgyaló neve?");
                 String name = scanner.nextLine();
                 // just as "buffer" to not to skip to next nextInt right after
                  scanner.nextLine();
@@ -111,19 +111,31 @@ public class MeetingRoomController {
             printMeetingRooms(office.getMeetingRooms());
         }
         if (whichMethod ==5) {
-
+            System.out.println("Melyik tárgyaló legyen? (pontos név)");
+            String name = scanner.nextLine();
+            scanner.nextLine();
+            genericPrint(office.getMeetingRoomWithGivenName(name));
         }
         if (whichMethod ==6) {
-
+            System.out.println("Melyik tárgyaló legyen? (részleges név)");
+            String name = scanner.nextLine();
+            scanner.nextLine();
+            printNames(office.getMeetingRoomsWithGivenNamePart(name));
         }
         if (whichMethod ==7) {
+            System.out.println("Mekkora területnél nagyobb kell?");
+            int area = scanner.nextInt();
+            scanner.nextLine();
 
+            printNames(office.getMeetingRoomsWithAreaLargerThan(area));
         }
         if (whichMethod ==8) {
+            System.out.println("Viszlát és kösz a halakat!");
 
         }
         else
         {
+            System.out.println("Hibás menüpontválasztás.");
 
         }
     }
@@ -135,17 +147,22 @@ public class MeetingRoomController {
         }
     }
 
+    
     // kiiratásra mi írjuk meg, a tárgyalók minden adatát szépen kiírja
     private void printMeetingRooms(List<MeetingRoom> meetingRooms){
         for (MeetingRoom item : meetingRooms) {
-            System.out.println(
-                                "név: " + item.getName() + " , " +
-                                "szélessége: " + item.getWidth() + " méter, " +
-                                "hossza: " + item.getLength() + " méter,  " +
-                                "területe: " + item.getArea() + " m2."
-            );
+            genericPrint(item); // kiszerveztük a kiiratást Refactorral, az már elfogad objektumot is
         }
 
+    }
+
+    private void genericPrint(MeetingRoom item) {
+        System.out.println(
+                            "név: " + item.getName() + " , " +
+                            "szélessége: " + item.getWidth() + " méter, " +
+                            "hossza: " + item.getLength() + " méter,  " +
+                            "területe: " + item.getArea() + " m2."
+        );
     }
 
 
